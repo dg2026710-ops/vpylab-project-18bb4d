@@ -1,14 +1,24 @@
-from vpython import *
+Web VPython 3.2
 
-# 구를 만들고 움직여보세요
-ball = sphere(pos=vector(0, 0, 0), radius=0.5, color=color.cyan)
-ball.velocity = vector(1, 0, 0)
+scene.caption = """Right button drag or Ctrl-drag to rotate "camera" to view scene.
+To zoom, drag with middle button or Alt/Option depressed, or use scroll wheel.
+    On a two-button mouse, middle is left + right.
+Shift-drag to pan left/right and up/down.
+Touch screen: pinch/extend to zoom, swipe or two-finger rotate."""
 
-dt = 0.01
-while True:
-    rate(100)
-    ball.pos = ball.pos + ball.velocity * dt
+side = 4.0
+thk = 0.3
+s2 = 2*side - thk
+s3 = 2*side + thk
 
-    # 벽에 부딪히면 반사
-    if abs(ball.pos.x) > 5:
-        ball.velocity.x = -ball.velocity.x
+wallR = box (pos=vector( side, 0, 0), size=vector(thk, s2, s3),  color = color.green)
+wallL = box (pos=vector(-side, 0, 0), size=vector(thk, s2, s3),  color = color.green)
+wallB = box (pos=vector(0,  side, 0), size=vector(s3, thk, s3),  color = color.green)
+wallT = box (pos=vector(0,  side, 0), size=vector(s3, thk, s3),  color = color.green)
+wallBK = box(pos=vector(0, 0, -side), size=vector(s2, s2, thk), color = color.gray(0.7))
+
+ball = sphere (color = color.green, radius = 0.4, make_trail=True, retain=200)
+ball.mass = 1.0
+ball.p = vector (-0.15, -0.23, +0.27)
+
+
